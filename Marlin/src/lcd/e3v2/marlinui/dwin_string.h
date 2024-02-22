@@ -23,13 +23,13 @@
 
 // TODO: Make AVR-compatible with separate ROM / RAM string methods
 
-#include "../../fontutils.h"
+#include "../../utf8.h"
 #include "../../marlinui.h"
 
 #include <stdint.h>
 
 typedef struct _dwin_charmap_t {
-  wchar_t uchar; // the unicode char
+  lchar_t uchar; // the unicode char
   uint8_t idx;   // the glyph of the char in the ROM
   uint8_t idx2;  // the char used to be combined with the idx to simulate a single char
 } dwin_charmap_t;
@@ -55,7 +55,7 @@ class DWIN_String {
     //static void add_glyphs(const uint8_t *font);
 
     //static font_t *font() { return font_header; };
-    //static uint16_t font_height() { return font_header->FontAscent - font_header->FontDescent; }
+    //static uint16_t font_height() { return font_header->fontAscent - font_header->fontDescent; }
     //static glyph_t *glyph(uint8_t character) { return glyphs[character] ?: glyphs[0x3F]; }  /* Use '?' for unknown glyphs */
     //static glyph_t *glyph(uint8_t *character) { return glyph(*character); }
 
@@ -69,10 +69,10 @@ class DWIN_String {
     /**
      * @brief Append a UTF-8 character
      *
-     * @param character The UTF-8 character
+     * @param wc The UTF-8 character
      */
-    static void add(wchar_t character);
-    static void set(wchar_t character) { set(); add(character); }
+    static void add(const lchar_t &wc);
+    static void set(const lchar_t &wc) { set(); add(wc); }
 
     /**
      * @brief Append / Set C-string
@@ -525,7 +525,6 @@ const dwin_charmap_t g_dwin_charmap_device[] PROGMEM = {
     {IV('⭢'), 0xC7, 0},
     {IV('⭣'), 0xC6, 0},
 
-
     {IV('⯆'), 0xF5, 0},
     {IV('⯇'), 0xF7, 0}, // ⯅
     {IV('⯈'), 0xF6, 0},
@@ -575,7 +574,6 @@ const dwin_charmap_t g_dwin_charmap_device[] PROGMEM = {
     //{IV(''), 0x9D, 0},
     //{IV(''), 0x9E, 0},
     //{IV(''), 0x9F, 0},
-
 
     {IV('¼'), 0xF0, 0}, // 00BC
     {IV('⅓'), 0xF1, 0},

@@ -38,10 +38,6 @@ extern xy_float_t delta_tower[ABC];
 extern abc_float_t delta_diagonal_rod_2_tower;
 extern float delta_clip_start_height;
 extern abc_float_t delta_diagonal_rod_trim;
-#if HAS_DELTA_SENSORLESS_PROBING
-  extern abc_float_t offset_sensorless_adj;
-  extern float largest_sensorless_adj;
-#endif
 
 /**
  * Recalculate factors used for delta kinematics whenever
@@ -68,7 +64,7 @@ void recalc_delta_settings();
  *
  * Suggested optimizations include:
  *
- * - Disable the home_offset (M206) and/or position_shift (G92)
+ * - Disable the home_offset (M206) and/or workspace_offset (G92)
  *   features to remove up to 12 float additions.
  *
  * - Use a fast-inverse-sqrt function and add the reciprocal.
